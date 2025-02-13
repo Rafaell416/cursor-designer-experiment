@@ -15,6 +15,7 @@ interface CanvasProps {
   onAddSquare: () => void;
   onAddText: () => void;
   onAddIPhone: () => void;
+  isSpacePressed: boolean;
 }
 
 export const Canvas = ({ 
@@ -23,7 +24,8 @@ export const Canvas = ({
   onEditElement,
   onAddSquare,
   onAddText,
-  onAddIPhone 
+  onAddIPhone,
+  isSpacePressed
 }: CanvasProps) => {
   const { zoom, handleWheel, zoomIn, zoomOut } = useZoom();
   const { 
@@ -31,7 +33,6 @@ export const Canvas = ({
     handleCanvasMouseDown, 
     handleCanvasMouseMove, 
     handleCanvasMouseUp,
-    isSpacePressed 
   } = useCanvas();
   const { dragState, handleMouseDown, handleMouseMove, handleMouseUp } = useDrag(zoom, setElements);
   const { resizeState, handleResizeStart, handleResizeMove, handleResizeEnd } = useResize(zoom, setElements);
@@ -53,7 +54,7 @@ export const Canvas = ({
   const handleMouseMoveWrapper = (e: React.MouseEvent) => {
     if (resizeState.isResizing) {
       handleResizeMove(e as unknown as MouseEvent);
-    } else if (canvasState.isPanning) {
+    } else if (isSpacePressed && canvasState.isPanning) {
       handleCanvasMouseMove(e);
     } else if (dragState.isDragging) {
       handleMouseMove(e as unknown as MouseEvent);
@@ -106,7 +107,11 @@ export const Canvas = ({
           backgroundSize: `${20 * zoom}px ${20 * zoom}px`,
           backgroundPosition: `${canvasState.x}px ${canvasState.y}px`,
         }}
-        onMouseDown={handleCanvasMouseDown}
+        onMouseDown={(e) => {
+          if (isSpacePressed) {
+            handleCanvasMouseDown(e);
+          }
+        }}
         onMouseMove={handleMouseMoveWrapper}
         onMouseUp={handleMouseUpWrapper}
         onMouseLeave={handleMouseUpWrapper}

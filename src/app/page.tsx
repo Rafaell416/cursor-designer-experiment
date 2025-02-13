@@ -134,6 +134,7 @@ export default function Home() {
           onAddSquare={addSquare}
           onAddText={addText}
           onAddIPhone={addIPhone}
+          isSpacePressed={isSpacePressed}
         />
       </div>
 

@@ -9,10 +9,9 @@ export const useCanvas = () => {
     startX: 0,
     startY: 0,
   });
-  const [isSpacePressed, setIsSpacePressed] = useState(false);
 
   const handleCanvasMouseDown = useCallback((e: React.MouseEvent) => {
-    if (isSpacePressed && e.button === 0) {
+    if (e.button === 0) {
       e.preventDefault();
       setCanvasState(prev => ({
         ...prev,
@@ -21,7 +20,7 @@ export const useCanvas = () => {
         startY: e.clientY,
       }));
     }
-  }, [isSpacePressed]);
+  }, []);
 
   const handleCanvasMouseMove = useCallback((e: React.MouseEvent) => {
     if (canvasState.isPanning) {
@@ -48,8 +47,6 @@ export const useCanvas = () => {
   return {
     canvasState,
     setCanvasState,
-    isSpacePressed,
-    setIsSpacePressed,
     handleCanvasMouseDown,
     handleCanvasMouseMove,
     handleCanvasMouseUp,
