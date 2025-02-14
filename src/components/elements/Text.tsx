@@ -8,12 +8,14 @@ interface TextProps {
   onEdit: (id: string) => void;
 }
 
-export const Text = ({ element, onMouseDown, onDoubleClick, onRemove, onEdit }: TextProps) => {
+export const Text = ({ element, onDoubleClick, onRemove, onEdit }: TextProps) => {
+  const tailwindClass = element?.tailwindClass ? element.tailwindClass : '';
   return (
     <div className="relative group">
       <div
         onDoubleClick={() => onDoubleClick(element.id)}
-        className={`min-w-[20px] p-1 cursor-text hover:ring-2 hover:ring-blue-400 hover:ring-offset-2 rounded
+        className={`min-w-[20px] p-1 cursor-text hover:ring-2 hover:ring-blue-400 hover:ring-offset-2 rounded whitespace-nowrap
+          ${tailwindClass}
           ${element.textStyle?.fontFamily === 'sans' ? 'font-sans' : 
             element.textStyle?.fontFamily === 'serif' ? 'font-serif' : 'font-mono'}
           ${element.textStyle?.fontWeight === 'medium' ? 'font-medium' :
@@ -27,6 +29,8 @@ export const Text = ({ element, onMouseDown, onDoubleClick, onRemove, onEdit }: 
         style={{
           color: element.textStyle?.color,
           fontSize: `${element.textStyle?.fontSize}px`,
+          width: element.style?.width ? `${element.style.width}px` : 'auto',
+          textAlign: 'center'
         }}
       >
         {element.content}

@@ -9,7 +9,7 @@ export const ZoomControls = ({ zoom, onZoomIn, onZoomOut }: ZoomControlsProps) =
     <div className="flex items-center gap-2 bg-gray-800 rounded px-3">
       <button
         onClick={onZoomIn}
-        className="text-white py-2 hover:text-gray-300"
+        className="text-white py-2 hover:text-gray-300 px-2 hover:bg-gray-700"
       >
         +
       </button>
@@ -18,7 +18,7 @@ export const ZoomControls = ({ zoom, onZoomIn, onZoomOut }: ZoomControlsProps) =
       </span>
       <button
         onClick={onZoomOut}
-        className="text-white py-2 hover:text-gray-300"
+        className="text-white py-2 hover:text-gray-300 px-2 hover:bg-gray-700"
       >
         -
       </button>

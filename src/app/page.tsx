@@ -3,12 +3,32 @@ import { useState, KeyboardEvent, useEffect } from "react";
 import { Canvas } from '../components/canvas/Canvas';
 import { SquareEditModal } from '../components/modals/SquareEditModal';
 import { TextEditModal } from '../components/modals/TextEditModal';
+import { useAICompanion, parseAIResponse } from '../hooks/useAICompanion';
 import { Element} from '../types/elements';
+import { result } from '../utils/mock';
+import { convertAIComponentsToElements } from '../utils/elementConverters';
 
 export default function Home() {
   const [elements, setElements] = useState<Element[]>([]);
+  console.log({elements});
   const [isSpacePressed, setIsSpacePressed] = useState(false);
   const [editingElement, setEditingElement] = useState<string | null>(null);
+  const { getDesignSuggestions, isLoading, error } = useAICompanion({ currentElements: elements });
+
+  //console.log({isLoading, error});
+
+  const handleGenerateDesign = async (screen: Element) => {
+    // const result = await getDesignSuggestions('');
+    // console.log({result});
+    
+    const parsedResponse = parseAIResponse(result.content);
+    const convertedElements = convertAIComponentsToElements(parsedResponse.components, screen.id, {
+      x: screen.x,
+      y: screen.y
+    });
+    setElements(prev => [...prev, ...convertedElements]);
+    console.log({screen, parsedResponse, convertedElements});
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
@@ -79,19 +99,25 @@ export default function Home() {
     ]);
   };
 
-  const addIPhone = () => {
+  const addIPhone = (screenName: string) => {
+    const iphoneId = `iphone-${Date.now()}`;
+    const screen: Element = {
+      id: iphoneId,
+      name: screenName,
+      type: 'iphone14pro',
+      x: 100,
+      y: 100,
+      style: {
+        zIndex: 0
+      }
+    }
     setElements([
       ...elements,
-      {
-        id: `iphone-${Date.now()}`,
-        type: 'iphone14pro',
-        x: 100,
-        y: 100,
-        style: {
-          zIndex: 0
-        }
-      }
+      screen
     ]);
+    setTimeout(() => {
+      handleGenerateDesign(screen);
+    }, 1000);
   };
 
   const handleStyleChange = (elementId: string, property: string, value: string | number) => {

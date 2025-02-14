@@ -7,10 +7,13 @@ interface TextEditModalProps {
 }
 
 export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModalProps) => {
+  const textStyle = element.textStyle || {};
+  const defaultColor = '#374151';
+
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg w-[300px] max-h-[90vh] overflow-y-auto">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-bold">Edit Text Style</h3>
+        <h3 className="font-bold text-gray-700">Edit Text Style</h3>
         <button onClick={onClose} className="text-gray-500 hover:text-gray-700">✕</button>
       </div>
       
@@ -21,13 +24,13 @@ export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModal
           <div className="flex gap-2 items-center">
             <input
               type="color"
-              value={element.textStyle?.color}
+              value={textStyle.color || defaultColor}
               onChange={(e) => onStyleChange('color', e.target.value)}
               className="w-10 h-10 rounded border p-0"
             />
             <input
               type="text"
-              value={element.textStyle?.color}
+              value={textStyle.color || defaultColor}
               onChange={(e) => onStyleChange('color', e.target.value)}
               className="flex-1 border rounded px-2 py-1 text-gray-900 font-mono font-medium"
             />
@@ -39,7 +42,7 @@ export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModal
           <label className="block text-sm text-gray-600 mb-1">Font Size</label>
           <input
             type="number"
-            value={element.textStyle?.fontSize}
+            value={textStyle.fontSize || 16}
             onChange={(e) => onStyleChange('fontSize', Number(e.target.value))}
             min={8}
             max={200}
@@ -51,7 +54,7 @@ export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModal
         <div>
           <label className="block text-sm text-gray-600 mb-1">Font Weight</label>
           <select
-            value={element.textStyle?.fontWeight}
+            value={textStyle.fontWeight || 'normal'}
             onChange={(e) => onStyleChange('fontWeight', e.target.value)}
             className="w-full border rounded px-2 py-1 text-gray-900 font-medium"
           >
@@ -66,7 +69,7 @@ export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModal
         <div>
           <label className="block text-sm text-gray-600 mb-1">Font Family</label>
           <select
-            value={element.textStyle?.fontFamily}
+            value={textStyle.fontFamily || 'sans'}
             onChange={(e) => onStyleChange('fontFamily', e.target.value)}
             className="w-full border rounded px-2 py-1 text-gray-900 font-medium"
           >
@@ -80,7 +83,7 @@ export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModal
         <div>
           <label className="block text-sm text-gray-600 mb-1">Font Style</label>
           <select
-            value={element.textStyle?.fontStyle}
+            value={textStyle.fontStyle || 'normal'}
             onChange={(e) => onStyleChange('fontStyle', e.target.value)}
             className="w-full border rounded px-2 py-1 text-gray-900 font-medium"
           >
@@ -93,7 +96,7 @@ export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModal
         <div>
           <label className="block text-sm text-gray-600 mb-1">Line Height</label>
           <select
-            value={element.textStyle?.lineHeight}
+            value={textStyle.lineHeight || 'normal'}
             onChange={(e) => onStyleChange('lineHeight', e.target.value)}
             className="w-full border rounded px-2 py-1 text-gray-900 font-medium"
           >

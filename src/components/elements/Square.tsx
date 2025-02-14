@@ -16,6 +16,7 @@ export const Square = ({ element, onMouseDown, onResizeStart, onRemove, onEdit }
       onMouseDown={(e) => onMouseDown(e, element)}
     >
       <div
+        className={`relative ${element?.tailwindClass ? element.tailwindClass : ''}`}
         style={{
           width: `${element.style?.width}px`,
           height: `${element.style?.height}px`,
@@ -26,7 +27,6 @@ export const Square = ({ element, onMouseDown, onResizeStart, onRemove, onEdit }
           borderStyle: 'solid',
           boxShadow: `${element.style?.shadowOffsetX}px ${element.style?.shadowOffsetY}px ${element.style?.shadowBlur}px ${element.style?.shadowSpread}px ${element.style?.shadowColor}`,
         }}
-        className="relative"
       >
         {/* Resize handles */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100">

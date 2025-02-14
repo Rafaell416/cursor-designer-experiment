@@ -21,20 +21,37 @@ export default function Playground() {
 
           {/* Screen Content */}
           <div className="w-full h-full p-8">
-            {/* <span className="text-3xl font-semibold text-gray-900 text-center mt-12">
-              Log in
-            </span> */}
-            <span className="absolute top-[40px] left-[165px] text-3xl font-bold text-gray-800">
-              Sign in
-            </span>
-            <div className="absolute top-[120px] left-[20px] w-[353px] h-[50px] bg-white border border-gray-300 rounded">
-              <span className="">Email</span>
+            <span className="absolute top-[40px] left-[50%] -translate-x-1/2 text-2xl font-bold text-center">Log in</span>
+            <div className="absolute top-[100px] left-[50%] -translate-x-1/2 w-[100px] h-[100px] bg-gray-200 rounded-full"/>
+            <div className="absolute top-[240px] left-[50%] -translate-x-1/2 w-[300px] h-[50px] bg-white border border-gray-300 rounded px-4 py-2">
+              <span className="text-gray-400 text-sm">Email</span>
             </div>
-            <div className="absolute top-[190px] left-[40px] w-[350px] h-[50px] bg-white border border-gray-300 rounded"/>
-            <div className="absolute top-[270px] left-[40px] w-[350px] h-[50px] bg-blue-500 rounded flex items-center justify-center"/>
-            <span className="absolute top-[340px] left-[160px] text-sm text-blue-500">
+            <div className="absolute top-[310px] left-[50%] -translate-x-1/2 w-[300px] h-[50px] bg-white border border-gray-300 rounded px-4 py-2">
+              <span className="text-gray-400 text-sm">Password</span>
+            </div>
+
+            <div className="absolute top-[380px] left-[50%] -translate-x-1/2 w-[300px] h-[50px] bg-blue-500 rounded text-white text-center flex items-center justify-center cursor-pointer">
+              <span className="font-semibold">Sign in</span>  
+            </div>
+
+            <span className="absolute top-[450px] left-[50%] -translate-x-1/2 text-sm text-blue-500 cursor-pointer">
               Forgot password?
             </span>
+
+
+            <div id="social-signin-section" className="absolute top-[520px] left-[50%] -translate-x-1/2 w-[300px] h-[100px] flex justify-between items-center">
+              <div className="w-[90px] h-[40px] bg-blue-600 rounded flex items-center justify-center">
+                <span className="text-white text-xs font-bold">Facebook</span>
+              </div>
+
+              <div className="w-[90px] h-[40px] bg-red-600 rounded flex items-center justify-center">
+                <span className="text-white text-xs font-bold">Google</span>
+              </div>
+
+              <div className="w-[90px] h-[40px] bg-black rounded flex items-center justify-center">
+                <span className="text-white text-xs font-bold">Apple</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

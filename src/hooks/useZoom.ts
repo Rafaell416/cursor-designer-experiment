@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react';
+import { WheelEvent } from 'react';
 
 export const useZoom = () => {
   const [zoom, setZoom] = useState(1);
 
-  const handleWheel = useCallback((e: WheelEvent) => {
+  const handleWheel = useCallback((e: WheelEvent<HTMLDivElement>) => {
     if (e.ctrlKey || e.metaKey) {
       e.preventDefault();
       const delta = -e.deltaY;

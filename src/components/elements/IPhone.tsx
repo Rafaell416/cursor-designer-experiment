@@ -6,11 +6,11 @@ interface IPhoneProps {
   onRemove: (id: string) => void;
 }
 
-export const IPhone = ({ element, onMouseDown, onRemove }: IPhoneProps) => {
+export const IPhone = ({ element, onRemove }: IPhoneProps) => {
   return (
     <div className="relative group">
       <div className="w-[393px] h-[852px] rounded-[55px] border-[12px] border-gray-900 relative bg-white overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-black rounded-b-[24px] z-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[20px] bg-black rounded-b-[24px] z-10" />
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -left-[12px] top-[200px] w-[12px] h-[50px] bg-gray-900" />
           <div className="absolute -left-[12px] top-[270px] w-[12px] h-[50px] bg-gray-900" />
@@ -23,6 +23,9 @@ export const IPhone = ({ element, onMouseDown, onRemove }: IPhoneProps) => {
       >
         ×
       </button>
+      {element.name && (
+        <p className=" absolute -top-6 -left-0 text-gray-700 text-sm font-regular">{element.name}</p>
+      )}
     </div>
   );
 }; 

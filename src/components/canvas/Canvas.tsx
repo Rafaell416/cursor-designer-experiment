@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useCanvas } from '../../hooks/useCanvas';
 import { useDrag } from '../../hooks/useDrag';
 import { useZoom } from '../../hooks/useZoom';
@@ -7,6 +8,7 @@ import { Text } from '../elements/Text';
 import { IPhone } from '../elements/IPhone';
 import { Element } from '../../types/elements';
 import { ZoomControls } from './ZoomControls';
+import { ScreenNameModal } from '../modals/ScreenNameModal';
 
 interface CanvasProps {
   elements: Element[];
@@ -14,7 +16,7 @@ interface CanvasProps {
   onEditElement: (id: string) => void;
   onAddSquare: () => void;
   onAddText: () => void;
-  onAddIPhone: () => void;
+  onAddIPhone: (screenName: string) => void;
   isSpacePressed: boolean;
 }
 
@@ -27,6 +29,7 @@ export const Canvas = ({
   onAddIPhone,
   isSpacePressed
 }: CanvasProps) => {
+  const [isScreenNameModalOpen, setIsScreenNameModalOpen] = useState(false);
   const { zoom, handleWheel, zoomIn, zoomOut } = useZoom();
   const { 
     canvasState, 
@@ -36,6 +39,10 @@ export const Canvas = ({
   } = useCanvas();
   const { dragState, handleMouseDown, handleMouseMove, handleMouseUp } = useDrag(zoom, setElements);
   const { resizeState, handleResizeStart, handleResizeMove, handleResizeEnd } = useResize(zoom, setElements);
+
+  const handleAddScreen = (screenName: string) => {
+    onAddIPhone(screenName);
+  };
 
   const handleTextDoubleClick = (id: string) => {
     const element = elements.find(el => el.id === id);
@@ -73,7 +80,7 @@ export const Canvas = ({
     <>
       <div className="fixed top-4 left-4 flex gap-2 z-10">
         <button
-          onClick={onAddIPhone}
+          onClick={() => setIsScreenNameModalOpen(true)}
           className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
         >
           Add Screen
@@ -96,6 +103,12 @@ export const Canvas = ({
           onZoomOut={zoomOut}
         />
       </div>
+
+      <ScreenNameModal
+        isOpen={isScreenNameModalOpen}
+        onClose={() => setIsScreenNameModalOpen(false)}
+        onSubmit={handleAddScreen}
+      />
 
       <div 
         className="w-full h-full relative touch-none"
