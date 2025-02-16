@@ -4,11 +4,21 @@ interface TextEditModalProps {
   element: Element;
   onClose: () => void;
   onStyleChange: (property: string, value: string | number) => void;
+  onPositionChange?: (x: number, y: number) => void;
 }
 
-export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModalProps) => {
+export const TextEditModal = ({ element, onClose, onStyleChange, onPositionChange }: TextEditModalProps) => {
   const textStyle = element.textStyle || {};
   const defaultColor = '#374151';
+
+  const handlePositionChange = (property: 'x' | 'y', value: number) => {
+    if (onPositionChange) {
+      onPositionChange(
+        property === 'x' ? value : element.x,
+        property === 'y' ? value : element.y
+      );
+    }
+  };
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg w-[300px] max-h-[90vh] overflow-y-auto">
@@ -106,6 +116,44 @@ export const TextEditModal = ({ element, onClose, onStyleChange }: TextEditModal
             <option value="loose">Loose</option>
           </select>
         </div>
+      </div>
+
+      {/* Position Controls */}
+      <div className="mt-4 space-y-4">
+        <h4 className="font-medium text-gray-700">Position</h4>
+        <div className="grid grid-cols-2 gap-4">
+          {/* X Position */}
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">X Position</label>
+            <input
+              type="number"
+              value={element.x}
+              onChange={(e) => handlePositionChange('x', Number(e.target.value))}
+              className="w-full border rounded px-2 py-1 text-gray-900 font-medium"
+            />
+          </div>
+          {/* Y Position */}
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">Y Position</label>
+            <input
+              type="number"
+              value={element.y}
+              onChange={(e) => handlePositionChange('y', Number(e.target.value))}
+              className="w-full border rounded px-2 py-1 text-gray-900 font-medium"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Z-Index */}
+      <div className="mt-4">
+        <label className="block text-sm text-gray-600 mb-1">Z-Index</label>
+        <input
+          type="number"
+          value={element.style?.zIndex || 0}
+          onChange={(e) => onStyleChange('zIndex', Number(e.target.value))}
+          className="w-full border rounded px-2 py-1 text-gray-900 font-medium"
+        />
       </div>
 
       <button

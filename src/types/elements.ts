@@ -74,6 +74,10 @@ export interface AIComponent {
   tailwindClass: string;
   properties: AIComponentProperties;
   children: AIComponent[];
+  position: {
+    x: number;
+    y: number;
+  };
 }
 
 export interface ParsedAIResponse {

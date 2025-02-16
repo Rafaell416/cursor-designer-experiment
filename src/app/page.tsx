@@ -5,7 +5,8 @@ import { SquareEditModal } from '../components/modals/SquareEditModal';
 import { TextEditModal } from '../components/modals/TextEditModal';
 import { useAICompanion, parseAIResponse } from '../hooks/useAICompanion';
 import { Element} from '../types/elements';
-import { result } from '../utils/mock';
+//import { result } from '../utils/mock';
+import { aiComponents } from '../utils/mock';
 import { convertAIComponentsToElements } from '../utils/elementConverters';
 
 export default function Home() {
@@ -15,19 +16,13 @@ export default function Home() {
   const [editingElement, setEditingElement] = useState<string | null>(null);
   const { getDesignSuggestions, isLoading, error } = useAICompanion({ currentElements: elements });
 
-  //console.log({isLoading, error});
+  console.log({isLoading, error});
 
   const handleGenerateDesign = async (screen: Element) => {
-    // const result = await getDesignSuggestions('');
-    // console.log({result});
-    
-    const parsedResponse = parseAIResponse(result.content);
-    const convertedElements = convertAIComponentsToElements(parsedResponse.components, screen.id, {
-      x: screen.x,
-      y: screen.y
-    });
+    //const components = await getDesignSuggestions('');
+
+    const convertedElements = convertAIComponentsToElements(aiComponents, screen);
     setElements(prev => [...prev, ...convertedElements]);
-    console.log({screen, parsedResponse, convertedElements});
   };
 
   useEffect(() => {
@@ -115,9 +110,7 @@ export default function Home() {
       ...elements,
       screen
     ]);
-    setTimeout(() => {
-      handleGenerateDesign(screen);
-    }, 1000);
+    handleGenerateDesign(screen);
   };
 
   const handleStyleChange = (elementId: string, property: string, value: string | number) => {
@@ -132,6 +125,14 @@ export default function Home() {
     setElements(elements.map(el =>
       el.id === elementId
         ? { ...el, textStyle: { ...el.textStyle!, [property]: value } }
+        : el
+    ));
+  };
+
+  const handlePositionChange = (elementId: string, x: number, y: number) => {
+    setElements(elements.map(el =>
+      el.id === elementId
+        ? { ...el, x, y }
         : el
     ));
   };
@@ -171,12 +172,14 @@ export default function Home() {
               element={elements.find(el => el.id === editingElement)!}
               onClose={() => setEditingElement(null)}
               onStyleChange={(property, value) => handleTextStyleChange(editingElement, property, value)}
+              onPositionChange={(x, y) => handlePositionChange(editingElement, x, y)}
             />
           ) : (
             <SquareEditModal
               element={elements.find(el => el.id === editingElement)!}
               onClose={() => setEditingElement(null)}
               onStyleChange={(property, value) => handleStyleChange(editingElement, property, value)}
+              onPositionChange={(x, y) => handlePositionChange(editingElement, x, y)}
             />
           )}
         </div>

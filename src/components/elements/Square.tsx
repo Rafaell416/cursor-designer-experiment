@@ -110,6 +110,10 @@ export const Square = ({ element, onMouseDown, onResizeStart, onRemove, onEdit }
           ✏️
         </button>
       </div>
+        {/* Position */}
+        <span className="absolute top-50 -left-0 -right-0 text-gray-800 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100">
+          x: {element.x} y: {element.y}
+        </span>
     </div>
   );
 }; 
